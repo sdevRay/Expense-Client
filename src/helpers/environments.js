@@ -7,7 +7,7 @@ switch(window.location.hostname) {
         break;
 
     case "rch-pernclient.herokuapp.com":
-        APIURL = "https://rch-pernapi.herokuapp.com/"
+        APIURL = "https://rch-pernapi.herokuapp.com"
         break;
 }
 
