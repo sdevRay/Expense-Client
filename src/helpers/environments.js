@@ -5,8 +5,10 @@ switch(window.location.hostname) {
     case "localhost":
         APIURL = "http://localhost:3000"
         break;
-    
-    
+
+    case "rch-pernclient.herokuapp.com":
+        APIURL = "https://rch-pernapi.herokuapp.com/"
+        break;
 }
 
 export default APIURL
