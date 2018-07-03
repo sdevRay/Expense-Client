@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Form, FormGroup, Label, Input, Button } from "reactstrap"
-
+import APIURL from "../helpers/environments"
 
 // class component because the state of the form will change as our users enter data
 
@@ -14,7 +14,7 @@ class Login extends Component {
     }
 
     handleSubmit = (e) => {
-        fetch("http://localhost:3000/api/user/login", {
+        fetch(`${APIURL}/api/user/login`, {
             method: "POST",
             body: JSON.stringify({ user: this.state }),
             headers: new Headers({

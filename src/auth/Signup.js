@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import { Form, FormGroup, Label, Input, Button } from "reactstrap"
+import APIURL from "../helpers/environments"
+
 
 // this is a standard Class Component that comes with state. We need it to be a class component because the state of the form will change as our users enter data
 
@@ -16,7 +18,7 @@ class Signup extends Component {
     }
    
     handleSubmit = (e) => {
-        fetch("http://localhost:3000/api/user/signup", {
+        fetch(`${APIURL}/api/user/signup`, {
             method: "POST",
             body: JSON.stringify({ user: this.state }),
             headers: new Headers({
