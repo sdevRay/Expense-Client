@@ -53,7 +53,7 @@ class ExpensesCreate extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <Label for="item">Item</Label>
-                        <Input id="item" type="text" name="item" value={this.state.item} placeholder="Enter Item" maxLength="10" required onChange={this.handleChange} />
+                        <Input id="item" type="text" name="item" value={this.state.item} placeholder="Enter Item" maxLength="20" required onChange={this.handleChange} />
                     </FormGroup>
 
                     <FormGroup>
