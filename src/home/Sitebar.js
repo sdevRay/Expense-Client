@@ -17,7 +17,9 @@ class Sitebar extends Component {
         return (
             <div>
                 <Navbar color="faded" light expand="md">
-                    <NavbarBrand>{this.props.setEmail}{" "}{this.props.setBudget}</NavbarBrand>
+                    <NavbarBrand>{this.props.setEmail}{" "}{this.props.setTotalCost}{" "}
+                    <Button onClick={e => this.props.clickPost(e)}>Post Total</Button>                    
+                    </NavbarBrand>
                     <NavbarToggler onClick={this.toggler} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>

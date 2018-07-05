@@ -13,8 +13,7 @@ class ExpensesIndex extends Component {
         this.state = {
             expensesArr: [],
             updatePressed: false, // Added for ExpensesEdit
-            expensesToUpdate: [], // Added for ExpensesEdit
-            totalCostArr: []
+            expensesToUpdate: [] // Added for ExpensesEdit
         }
     }
 
@@ -66,11 +65,13 @@ class ExpensesIndex extends Component {
                 this.setState({ updatePressed: false })
                 this.fetchExpenses()
             })
+
+        
     }
 
     render() {
         const expenses = this.state.expensesArr.length >= 1 ?
-            <ExpensesTable expenses={this.state.expensesArr} delete={this.deleteExpenses} update={this.setUpdatedExpenses} totalCost={this.state.totalCostArr} /> : <h2>Add an expense</h2>
+            <ExpensesTable expenses={this.state.expensesArr} delete={this.deleteExpenses} update={this.setUpdatedExpenses} setTotalCost={this.props.setTotalCost}/> : <h2>Add an expense</h2>
 
         return (
             <Container>
@@ -83,7 +84,7 @@ class ExpensesIndex extends Component {
                     </Col>
                 </Row>
                 <Col md="12">
-                    {this.state.updatePressed ? <ExpensesEdit t={this.state.updatePressed} update={this.updateExpenses} expenses={this.state.expensesToUpdate} /> : <div></div>}
+                    {this.state.updatePressed ? <ExpensesEdit t={this.state.updatePressed} update={this.updateExpenses} expenses={this.state.expensesToUpdate} setTotalCost={this.props.setTotalCost}/> : <div></div>}
                 </Col>
             </Container>
         )
