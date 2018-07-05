@@ -9,14 +9,18 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      sessionToken: "" // storing our sessionToken in the state
+      sessionToken: "", // storing our sessionToken in the state
+      email: "",
+      budget: ""
     }
   }
 
   componentWillMount() {
     const token = localStorage.getItem("token") //  grabbing the token if it exists from the local storage
+    const email = localStorage.getItem("email")
+    const budget = localStorage.getItem("budget")
     if (token && !this.state.sessionToken) {  // set it in the state if the state is still empty. This would be useful on page refresh, etc. so that the user doesn't have to log into the app upon every visit.
-      this.setState({ sessionToken: token })
+      this.setState({ sessionToken: token, email: email, budget: budget })
     }
   }
 
@@ -25,8 +29,18 @@ class App extends Component {
     this.setState({ sessionToken: token })
   }
 
+  setEmailToState = (email) => {
+    localStorage.setItem("email", email)
+    this.setState({ email: email})
+  }
+
+  setBudgetToState = (budget) => {
+    localStorage.setItem("budget", budget)
+    this.setState({ budget: budget})
+  } 
+
   logout = () => {
-    this.setState({ sessionToken: "" })
+    this.setState({ sessionToken: "", email: "", budget: "" })
     localStorage.clear()
   }
 
@@ -35,14 +49,14 @@ class App extends Component {
       return (
         <Switch>
           <Route path="/" exact>
-            <Splash setTokenFromApp={this.state.sessionToken} />
+            <Splash setEmailFromApp={this.state.email} setTokenFromApp={this.state.sessionToken} />
           </Route>
         </Switch>
       )
     } else {
       return (
         <Route path="/auth">
-          <Auth setTokenFromApp={this.setSessionTokenToState} />
+          <Auth setEmailFromApp={this.setEmailToState} setTokenFromApp={this.setSessionTokenToState} />
         </Route>
       )
     }
@@ -53,7 +67,7 @@ class App extends Component {
       // Without <Router> we can't route to specific components, or anything within our application.
       <Router>
         <div>
-          <Sitebar clickLogout={this.logout} />
+          <Sitebar setBudget={this.state.budget} setEmail={this.state.email} clickLogout={this.logout} />
           {this.protectedViews()}
         </div>
       </Router>

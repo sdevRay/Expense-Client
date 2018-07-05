@@ -9,13 +9,20 @@ class Signup extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: "",
+            email: "",
             password: ""
         }
 
         // set these items to empty strings to set the initial value for the state of those properties. Simply put, when a user starts the application those properties should not have values.
 
     }
+
+    // handleError = (res) => {
+    //     if(!res.ok){
+    //         console.log("Error")
+    //     }
+    //     return res.json()
+    // }
    
     handleSubmit = (e) => {
         fetch(`${APIURL}/api/user/signup`, {
@@ -26,7 +33,10 @@ class Signup extends Component {
             }) 
         })
         .then(res => res.json())
-        .then(returnedData => this.props.setTokenFromAuth(returnedData.sessionToken))
+        .then(returnedData => {
+            this.props.setEmailFromAuth(returnedData.user.email)
+            this.props.setTokenFromAuth(returnedData.sessionToken)
+        })
         e.preventDefault()
     }
 
@@ -42,12 +52,12 @@ class Signup extends Component {
 
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
-                        <Label for="username">Username</Label>
-                        <Input id="su_username" type="text" name="username" placeholder="Enter Username" onChange={this.handleChange}/>
+                        <Label for="email">Email</Label>
+                        <Input id="su_email" type="email" name="email" placeholder="name@email.com" required onChange={this.handleChange}/>
                     </FormGroup>
                     <FormGroup>
                         <Label for="passwordhash">Password</Label>
-                        <Input id="su_password" type="password" name="password" placeholder="Enter Password" onChange={this.handleChange}/>
+                        <Input id="su_password" type="password" name="password" placeholder="Enter Password" minLength="5" maxLength="20" required onChange={this.handleChange}/>
                     </FormGroup>
                     <Button type="submit">Submit</Button>
                 </Form>

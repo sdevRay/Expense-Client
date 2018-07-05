@@ -4,7 +4,9 @@ import { Collapse, Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, Button } fr
 class Sitebar extends Component {
     constructor(props) {
         super(props)
-        this.state = { isOpen: false }
+        this.state = { 
+            isOpen: false 
+        }
     }
 
     toggler = () => {
@@ -15,11 +17,12 @@ class Sitebar extends Component {
         return (
             <div>
                 <Navbar color="faded" light expand="md">
-                    <NavbarBrand href="/">PUT USERNAME HERE</NavbarBrand>
+                    <NavbarBrand>{this.props.setEmail}{" "}{this.props.setBudget}</NavbarBrand>
                     <NavbarToggler onClick={this.toggler} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
+                                <Button onClick={this.props.clickBudget}>Budget</Button>
                                 <Button onClick={this.props.clickLogout}>Logout</Button>
                             </NavItem>
                         </Nav>

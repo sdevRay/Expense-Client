@@ -5,7 +5,7 @@ import ExpensesEdit from "./ExpensesEdit"
 import { Container, Row, Col } from "reactstrap"
 import APIURL from "../helpers/environments"
 
-// 
+// import ExpensesBudget from "./ExpensesBudget"
 
 class ExpensesIndex extends Component {
     constructor(props) {
@@ -13,7 +13,8 @@ class ExpensesIndex extends Component {
         this.state = {
             expensesArr: [],
             updatePressed: false, // Added for ExpensesEdit
-            expensesToUpdate: [] // Added for ExpensesEdit
+            expensesToUpdate: [], // Added for ExpensesEdit
+            totalCostArr: []
         }
     }
 
@@ -42,9 +43,9 @@ class ExpensesIndex extends Component {
                 "Authorization": this.props.setTokenFromSplash
             })
         })
-        .then(res => this.fetchExpenses())
+            .then(res => this.fetchExpenses())
     }
-    
+
     setUpdatedExpenses = (e, expenses) => {
         this.setState({
             expensesToUpdate: expenses,
@@ -61,29 +62,28 @@ class ExpensesIndex extends Component {
                 "Authorization": this.props.setTokenFromSplash
             })
         })
-        .then(res => {
-            this.setState({ updatePressed: false })
-            this.fetchExpenses()
-        })
+            .then(res => {
+                this.setState({ updatePressed: false })
+                this.fetchExpenses()
+            })
     }
 
     render() {
-        const expenses = this.state.expensesArr.length >= 1 ? 
-        <ExpensesTable expenses={this.state.expensesArr} delete={this.deleteExpenses} update={this.setUpdatedExpenses} /> : <h2>Add an expense to see a table</h2>
-    
+        const expenses = this.state.expensesArr.length >= 1 ?
+            <ExpensesTable expenses={this.state.expensesArr} delete={this.deleteExpenses} update={this.setUpdatedExpenses} totalCost={this.state.totalCostArr} /> : <h2>Add an expense</h2>
+
         return (
             <Container>
                 <Row>
                     <Col md="3">
                         <ExpensesCreate setTokenFromExpensesIndex={this.props.setTokenFromSplash} updateFetchExpenses={this.fetchExpenses} />
                     </Col>
-
                     <Col md="9">
                         {expenses}
                     </Col>
                 </Row>
                 <Col md="12">
-                    { this.state.updatePressed ? <ExpensesEdit t={this.state.updatePressed} update={this.updateExpenses} expenses={this.state.expensesToUpdate} /> : <div></div> }
+                    {this.state.updatePressed ? <ExpensesEdit t={this.state.updatePressed} update={this.updateExpenses} expenses={this.state.expensesToUpdate} /> : <div></div>}
                 </Col>
             </Container>
         )

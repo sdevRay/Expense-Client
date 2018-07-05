@@ -8,7 +8,7 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: "",
+            email: "",
             password: ""
         }
     }
@@ -22,7 +22,10 @@ class Login extends Component {
             })
         })
         .then(res => res.json())
-        .then(data => this.props.setTokenFromAuth(data.sessionToken))
+        .then(returnedData => {
+            this.props.setEmailFromAuth(returnedData.user.email)
+            this.props.setTokenFromAuth(returnedData.sessionToken)
+        })
         e.preventDefault()
     }
 
@@ -38,12 +41,12 @@ class Login extends Component {
 
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
-                        <Label for="username">Username</Label>
-                        <Input id="li_username" type="text" name="username" placeholder="Enter Username" onChange={this.handleChange} />
+                        <Label for="email">Email</Label>
+                        <Input id="li_email" type="email" name="email" placeholder="name@email.com" required onChange={this.handleChange} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="password">Password</Label>
-                        <Input id="li_password" type="password" name="password" placeholder="Enter Password" onChange={this.handleChange} />
+                        <Input id="li_password" type="password" name="password" placeholder="Enter Password" minLength="5" maxLength="20"  required onChange={this.handleChange} />
                     </FormGroup>
                     <Button type="submit">Submit</Button>
                 </Form>
