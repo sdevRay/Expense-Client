@@ -19,8 +19,9 @@ class App extends Component {
   componentWillMount() {
     const token = localStorage.getItem("token") //  grabbing the token if it exists from the local storage
     const email = localStorage.getItem("email")
+    const totalCost = localStorage.getItem("totalCost")
     if (token && !this.state.sessionToken) {  // set it in the state if the state is still empty. This would be useful on page refresh, etc. so that the user doesn't have to log into the app upon every visit.
-      this.setState({ sessionToken: token, email: email })
+      this.setState({ sessionToken: token, email: email, totalCost: totalCost })
     }
   }
 
@@ -35,12 +36,12 @@ class App extends Component {
   }
 
   setTotalCostToState = (totalCost) => {
-    // localStorage.setItem("totalCost", totalCost)
+    localStorage.setItem("totalCost", totalCost)
     this.setState({ totalCost: totalCost })
   }
 
   logout = () => {
-    this.setState({ sessionToken: "", email: "" })
+    this.setState({ sessionToken: "", email: "", totalCost: "" })
     localStorage.clear()
   }
 
