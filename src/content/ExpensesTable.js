@@ -4,14 +4,6 @@ import { Table, Button } from "reactstrap"
 
 class ExpensesTable extends Component {
 
-    componentWillMount() {
-        const totalCost = this.props.expenses.map(expense => 
-                expense = (expense.paid === "Paid") ? Number(expense.cost) : 0           
-        ).reduce((prev, next) => prev + next, 0)
-
-        this.props.setTotalCost(totalCost)
-    }
-
     render() {
         return (
             <div>
@@ -29,7 +21,6 @@ class ExpensesTable extends Component {
                         </tr>
                     </thead>
                     <tbody>
-
                         {
                             this.props.expenses.map((expense, id) => {
                                 const cost = parseFloat(Math.round(expense.cost * 100) / 100).toFixed(2)

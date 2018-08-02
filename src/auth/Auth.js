@@ -39,7 +39,8 @@ class Auth extends Component {
             <Container className="auth-container">
                 <div>
                     {this.checkUser()}
-                    <Button onClick={this.changeUserStatus}>Change</Button>
+                    <br></br>
+                    {this.state.isUser ? <Button onClick={this.changeUserStatus}>Click to Signup</Button> : <Button onClick={this.changeUserStatus}>Click to Login</Button>}
                 </div>
             </Container>
         )

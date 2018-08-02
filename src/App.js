@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Sitebar from "./home/Sitebar"
 import Auth from "./auth/Auth"
 import Splash from "./home/Splash"
-import APIURL from "./helpers/environments"
+// import APIURL from "./helpers/environments"
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
@@ -16,12 +16,11 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const token = localStorage.getItem("token") //  grabbing the token if it exists from the local storage
     const email = localStorage.getItem("email")
-    const totalCost = localStorage.getItem("totalCost")
     if (token && !this.state.sessionToken) {  // set it in the state if the state is still empty. This would be useful on page refresh, etc. so that the user doesn't have to log into the app upon every visit.
-      this.setState({ sessionToken: token, email: email, totalCost: totalCost })
+      this.setState({ sessionToken: token, email: email })
     }
   }
 
@@ -30,42 +29,29 @@ class App extends Component {
     this.setState({ sessionToken: token })
   }
 
+  setTotalCostToState = (totalCost) => {
+    // return totalCost
+    // localStorage.setItem("email", email)
+    this.setState({ totalCost: totalCost })
+
+  }
+
   setEmailToState = (email) => {
     localStorage.setItem("email", email)
     this.setState({ email: email })
   }
 
-  setTotalCostToState = (totalCost) => {
-    localStorage.setItem("totalCost", totalCost)
-    this.setState({ totalCost: totalCost })
-  }
-
   logout = () => {
-    this.setState({ sessionToken: "", email: "", totalCost: "" })
+    this.setState({ sessionToken: "", email: "", logout: "" })
     localStorage.clear()
   }
-
-  postTotal = (e) => {
-    e.preventDefault()
-    fetch(`${APIURL}/api/post`, {
-      method: "POST",
-      body: JSON.stringify({ post: this.state.totalCost }),
-      headers: new Headers({
-        "Content-Type": "application/json",
-        "Authorization": this.state.sessionToken
-      })
-    })
-      .then(res => res.json())
-      .catch(err => err.status(500).send(err.message))
-  }
-
 
   protectedViews = () => {
     if (this.state.sessionToken === localStorage.getItem("token")) {
       return (
         <Switch>
           <Route path="/" exact>
-            <Splash setEmailFromApp={this.state.email} setTokenFromApp={this.state.sessionToken} setTotalCost={this.setTotalCostToState} />
+            <Splash setEmailFromApp={this.state.email} setTokenFromApp={this.state.sessionToken} setTotalCostFromApp={this.setTotalCostToState} />
           </Route>
         </Switch>
       )
@@ -83,7 +69,7 @@ class App extends Component {
       // Without <Router> we can't route to specific components, or anything within our application.
       <Router>
         <div>
-          <Sitebar setTotalCost={this.state.totalCost} setEmail={this.state.email} clickLogout={this.logout} clickPost={this.postTotal} />
+          <Sitebar setTokenFromApp={this.state.sessionToken} setEmail={this.state.email} setTotalCost={this.state.totalCost} clickLogout={this.logout} />
           {this.protectedViews()}
         </div>
       </Router>

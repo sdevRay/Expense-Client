@@ -23,20 +23,20 @@ class Signup extends Component {
     //     }
     //     return res.json()
     // }
-   
+
     handleSubmit = (e) => {
         fetch(`${APIURL}/api/user/signup`, {
             method: "POST",
             body: JSON.stringify({ user: this.state }),
             headers: new Headers({
                 "Content-Type": "application/json"
-            }) 
+            })
         })
-        .then(res => res.json())
-        .then(returnedData => {
-            this.props.setEmailFromAuth(returnedData.user.email)
-            this.props.setTokenFromAuth(returnedData.sessionToken)
-        })
+            .then(res => res.json())
+            .then(returnedData => {
+                this.props.setEmailFromAuth(returnedData.user.email)
+                this.props.setTokenFromAuth(returnedData.sessionToken)
+            })
         e.preventDefault()
     }
 
@@ -47,20 +47,24 @@ class Signup extends Component {
     render() {
         return (
             <div>
-                <h1>Signup</h1>
-                <h6>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam sint ut reiciendis inventore optio error voluptate, soluta quas, facilis exercitationem fugit architecto. Optio itaque autem earum voluptatum excepturi, atque eaque.</h6>
+                <div>
+                    <h1 id="title">Expense Tracker</h1>
+                    <h2>Signup</h2>
+                </div>
 
-                <Form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <Label for="email">Email</Label>
-                        <Input id="su_email" type="email" name="email" placeholder="name@email.com" required onChange={this.handleChange}/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="passwordhash">Password</Label>
-                        <Input id="su_password" type="password" name="password" placeholder="Enter Password" minLength="5" maxLength="20" required onChange={this.handleChange}/>
-                    </FormGroup>
-                    <Button type="submit">Submit</Button>
-                </Form>
+                <div>
+                    <Form onSubmit={this.handleSubmit}>
+                        <FormGroup>
+                            <Label for="email">Email</Label>
+                            <Input id="su_email" type="email" name="email" placeholder="name@email.com" required onChange={this.handleChange} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="passwordhash">Password</Label>
+                            <Input id="su_password" type="password" name="password" placeholder="Enter Password" minLength="5" maxLength="20" required onChange={this.handleChange} />
+                        </FormGroup>
+                        <Button type="submit">Signup</Button>
+                    </Form>
+                </div>
             </div>
         )
     }

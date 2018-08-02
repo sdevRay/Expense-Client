@@ -14,14 +14,17 @@ class ExpensesIndex extends Component {
             expensesArr: [],
             updatePressed: false, // Added for ExpensesEdit
             expensesToUpdate: [] // Added for ExpensesEdit
+
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.fetchExpenses()
     }
 
+
     fetchExpenses = () => {
+        let totalCost = 0
         fetch(`${APIURL}/api/expenses`, {
             method: "GET",
             headers: new Headers({
@@ -30,7 +33,12 @@ class ExpensesIndex extends Component {
             })
         })
             .then(res => res.json())
-            .then(returnedData => this.setState({ expensesArr: returnedData }))
+            .then((returnedData) => {
+                totalCost = returnedData.map(expense => expense = (expense.paid === "Paid") ? Number(expense.cost) : 0).reduce((prev, next) => prev + next, 0)
+                this.props.setTotalCostFromSplash(totalCost)
+                this.setState({ expensesArr: returnedData })
+            })
+            .catch(err => console.log(err.message))
     }
 
     deleteExpenses = (e) => {
@@ -66,12 +74,11 @@ class ExpensesIndex extends Component {
                 this.fetchExpenses()
             })
 
-        
     }
 
     render() {
         const expenses = this.state.expensesArr.length >= 1 ?
-            <ExpensesTable expenses={this.state.expensesArr} delete={this.deleteExpenses} update={this.setUpdatedExpenses} setTotalCost={this.props.setTotalCost}/> : <h2>Add an expense</h2>
+            <ExpensesTable expenses={this.state.expensesArr} delete={this.deleteExpenses} update={this.setUpdatedExpenses} /> : <h2>Add an expense</h2>
 
         return (
             <Container>
@@ -84,7 +91,7 @@ class ExpensesIndex extends Component {
                     </Col>
                 </Row>
                 <Col md="12">
-                    {this.state.updatePressed ? <ExpensesEdit t={this.state.updatePressed} update={this.updateExpenses} expenses={this.state.expensesToUpdate} setTotalCost={this.props.setTotalCost}/> : <div></div>}
+                    {this.state.updatePressed ? <ExpensesEdit t={this.state.updatePressed} update={this.updateExpenses} expenses={this.state.expensesToUpdate} /> : <div></div>}
                 </Col>
             </Container>
         )

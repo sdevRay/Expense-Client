@@ -21,11 +21,11 @@ class Login extends Component {
                 "Content-Type": "application/json",
             })
         })
-        .then(res => res.json())
-        .then(returnedData => {
-            this.props.setEmailFromAuth(returnedData.user.email)
-            this.props.setTokenFromAuth(returnedData.sessionToken)
-        })
+            .then(res => res.json())
+            .then(returnedData => {
+                this.props.setEmailFromAuth(returnedData.user.email)
+                this.props.setTokenFromAuth(returnedData.sessionToken)
+            })
         e.preventDefault()
     }
 
@@ -36,20 +36,25 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <h1>Login</h1>
-                <h6>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam sint ut reiciendis inventore optio error voluptate, soluta quas, facilis exercitationem fugit architecto. Optio itaque autem earum voluptatum excepturi, atque eaque.</h6>
+                <div>
+                    <h1 id="title">Expense Tracker</h1>
+                    <h2>Login</h2>
 
-                <Form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <Label for="email">Email</Label>
-                        <Input id="li_email" type="email" name="email" placeholder="name@email.com" required onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="password">Password</Label>
-                        <Input id="li_password" type="password" name="password" placeholder="Enter Password" minLength="5" maxLength="20"  required onChange={this.handleChange} />
-                    </FormGroup>
-                    <Button type="submit">Submit</Button>
-                </Form>
+                </div>
+
+                <div>
+                    <Form onSubmit={this.handleSubmit}>
+                        <FormGroup>
+                            <Label for="email">Email</Label>
+                            <Input id="li_email" type="email" name="email" placeholder="name@email.com" required onChange={this.handleChange} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="password">Password</Label>
+                            <Input id="li_password" type="password" name="password" placeholder="Enter Password" minLength="5" maxLength="20" required onChange={this.handleChange} />
+                        </FormGroup>
+                        <Button type="submit">Login</Button>
+                    </Form>
+                </div>
             </div>
         )
     }
